@@ -126,6 +126,8 @@ const TodoController = {
                 });
             }
 
+            if(req.body.completed === null) req.body.completed = false;
+
             item.completed = req.body.completed;
 
             await item.save();
