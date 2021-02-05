@@ -1,18 +1,8 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment } from 'react';
 
-import TaskContext from '../../context/tasks/taskContext';
 import Task from './Task';
 
-const ListTasks = () => {
-    const taskContext = useContext(TaskContext);
-    const { tasks, getTasks } = taskContext;
-
-    useEffect(() => {
-        getTasks();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
+const ListTasks = ({ tasks }) => {
     return (
         <Fragment>
             <table className='table table-responsive text-center'>
@@ -28,7 +18,7 @@ const ListTasks = () => {
                 </thead>
                 <tbody>
                     {
-                        tasks.length === undefined
+                        tasks.length === 0
                             ? (<tr>No hay Tasks</tr>)
                             : tasks.map(task => (
                                 <Task

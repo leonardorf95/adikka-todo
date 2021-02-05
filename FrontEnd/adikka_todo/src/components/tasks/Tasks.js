@@ -1,10 +1,22 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
+
+import TaskContext from '../../context/tasks/taskContext';
 
 import FormSearch from './FormSearch';
 import FormTaks from './FormTaks';
 import ListTasks from './ListTasks';
 
 const Tasks = () => {
+    const taskContext = useContext(TaskContext);
+    const { tasks, getTasks } = taskContext;
+    
+    useEffect(() => {
+        if(tasks.length === 0) 
+            getTasks();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Fragment>
             <div className='my-3 p-3 bg-white rounded shadow-sm'>
@@ -14,7 +26,7 @@ const Tasks = () => {
                     </div>
 
                     <div className='col-md-6'>
-                        <FormSearch />
+                        <FormSearch tasks={tasks}/>
                     </div>
 
                     <div className='col-md-2'>
@@ -28,11 +40,11 @@ const Tasks = () => {
                 <br />
 
                 <div className="row">
-                    <ListTasks />
+                    <ListTasks tasks={tasks} />
                 </div>
             </div>
 
-            <div className="modal fade" id="showForm" data-bs-keyboard="false"  aria-labelledby="showFormLabel" aria-hidden="true">
+            <div className="modal fade" id="showForm" data-bs-keyboard="false" aria-labelledby="showFormLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
