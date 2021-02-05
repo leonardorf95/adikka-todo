@@ -1,13 +1,27 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
-const FormSearch = () => {
+const FormSearch = ({ tasks }) => {
+    const [query, setQuery] = useState('');
+
+    const filterTasks = tasks.filter(task => {
+        console.log(query)
+        return task.title.toLowerCase().includes(query);
+    });
+
     return (
         <Fragment>
-            <form className='d-flex'>
-                <input type="text" className='form-control me-2' placeholder='Search Task' name="" id=""/>
-
-                <button type="submit" className='btn btn-outline-success'>Search</button>
-            </form>
+            <div className='d-flex'>
+                <input type="text"
+                    className='form-control me-2'
+                    placeholder='Search Task'
+                    name=""
+                    id=""
+                    value={query}
+                    onChange={e => {
+                        setQuery(e.target.value);
+                    }}
+                />
+            </div>
         </Fragment>
     )
 }
