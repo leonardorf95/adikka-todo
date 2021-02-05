@@ -2,9 +2,9 @@ import React, { Fragment, useContext, useState } from 'react';
 
 import TaskContext from '../../context/tasks/taskContext';
 
-const FormTaks = ({id = 0}) => {
+const FormTaks = (props) => {
     const taskContext = useContext(TaskContext);
-    const {  getTask, getTasks, createTask } = taskContext;
+    const {  createTask } = taskContext;
 
     const [task, saveTask] = useState({
         id: 0,
@@ -15,9 +15,6 @@ const FormTaks = ({id = 0}) => {
 
     const { title, name } = task;
 
-    if(id !== 0) {
-        getTask(id)
-    }
 
     const onChangeTasks = e => {
         saveTask({
@@ -42,7 +39,7 @@ const FormTaks = ({id = 0}) => {
             name: ''
         });
 
-        getTasks();
+        window.location.reload()
     }
 
     return (
