@@ -28,16 +28,16 @@ const TaskState = props => {
         }
     }
 
-    const getTask = async task => {
+    const getTask = async id => {
         try {
-            const response = await ClientAxios.get(`/api/todos/${task.id}`);
-
-            console.log(response)
+            const response = await ClientAxios.get(`/api/todos/${id}`);
 
             dispatch({
                 type: CURRENT_TASK,
                 payload: response.data.item
             });
+
+            return response.data.item;
         } catch (error) {
             console.log(error);
         }
