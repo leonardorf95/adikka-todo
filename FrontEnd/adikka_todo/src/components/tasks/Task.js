@@ -1,11 +1,10 @@
 import React, { Fragment, useContext } from 'react';
-
+import { Link } from 'react-router-dom';
 import TaskContext from '../../context/tasks/taskContext';
-import FormTaks from './FormTaks';
 
 const Task = ({ task }) => {
     const taskContext = useContext(TaskContext);
-    const {changeStateTask, deleteTask } = taskContext;
+    const { changeStateTask, deleteTask } = taskContext;
 
     const deleteThisTask = id => {
         deleteTask(id);
@@ -18,10 +17,6 @@ const Task = ({ task }) => {
             task.completed = false;
 
         changeStateTask(task);
-    }
-
-    const selectedThisTask = id => {
-        <FormTaks id={id} />
     }
 
     return (
@@ -39,11 +34,9 @@ const Task = ({ task }) => {
                     }
                 </td>
                 <td>
-                    <button className='btn btn-warning btn-small' data-bs-toggle="modal" data-bs-target="#showForm"
-                        onClick={() => selectedThisTask(task.id)}
-                    >
+                    <Link to={`/detail/${task.id}`} className="btn btn-warning btn-small">
                         <i className="far fa-edit"></i>
-                    </button>
+                    </Link>
                             &nbsp; &nbsp;
                     <button className='btn btn-danger btn-small'
                         onClick={() => deleteThisTask(task.id)}
