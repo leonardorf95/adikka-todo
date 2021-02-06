@@ -1,27 +1,42 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
+// Importación del context de estados
 import TaskContext from '../../context/tasks/taskContext';
+
+// Importación de Subcomponentes
 import Header from '../layout/Header';
 
+/* 
+ Componente FormEditTask principal
+*/
 const FormEditTask = (props) => {
+    // Obtención del id proveniente de la url
     const { id } = props.match.params;
 
+    // Creación del objecto context para su implementación
     const taskContext = useContext(TaskContext);
+
+    // Implementación de props provenientes del context
     const { getTask, updateTask } = taskContext;
 
+    // Implementación del state del componente para la manipulacion de la información
     const [taskUpdate, saveTask] = useState(null);
 
+    // Implementación de useEffet para la detección del cambio del objecto
     useEffect(() => {
         getInformation();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Funcion para obtener la información basada en un solo item
     const getInformation = async () => {
         const information = await getTask(id);
         console.log(information[0])
         saveTask(information[0]);
     }
 
+    // Funcion para la manipulacion de los inputs
     const onChangeTasks = e => {
         e.preventDefault();
 
@@ -31,14 +46,19 @@ const FormEditTask = (props) => {
         });
     }
 
+    // Funcion para enviar la informacion al props de actualizacion en el state (en base de datos)
     const onSubmitTask = e => {
         e.preventDefault();
 
         if (taskUpdate.title === '' || taskUpdate.name === '') {
-            // Mensaje de alerta
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algún campo se encuentra vacio'
+            });
             return;
         }
-        
+
         updateTask(taskUpdate);
 
         props.history.push('/');

@@ -1,5 +1,8 @@
 import React, { Fragment } from 'react';
 
+/* 
+ Componente Header principal
+*/
 const Header = () => {
     return (
         <Fragment>

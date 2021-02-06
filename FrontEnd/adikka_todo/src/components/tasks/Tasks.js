@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
 
+// Importación de Subcomponentes
 import FormTaks from './FormTaks';
 import ListTasks from './ListTasks';
 
+/* 
+ Componente Task principal
+*/
 const Tasks = ({ tasks }) => {
     return (
         <Fragment>

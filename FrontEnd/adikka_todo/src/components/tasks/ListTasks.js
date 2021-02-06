@@ -1,10 +1,16 @@
 import React, { Fragment, useState } from 'react';
 
+// Importación de Subcomponentes
 import Task from './Task';
 
+/* 
+ Componente ListTasks principal
+*/
 const ListTasks = ({ tasks }) => {
+    // Declaración del state para la manipulacion de busqueda
     const [query, setQuery] = useState('');
 
+    // Función que manipulara los resultados conforme a la busqueda
     const filterTasks = tasks.filter(task => {
         return task.title.toLowerCase().includes(query);
     });

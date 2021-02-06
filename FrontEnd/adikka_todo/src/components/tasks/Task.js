@@ -1,15 +1,25 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+// Importación del context de estados
 import TaskContext from '../../context/tasks/taskContext';
 
+/* 
+ Componente Task principal
+*/
 const Task = ({ task }) => {
+    // Creación del objecto context para su implementación
     const taskContext = useContext(TaskContext);
+
+    // Implementación de props provenientes del context
     const { changeStateTask, deleteTask } = taskContext;
 
+    // Funcion para eliminar un item
     const deleteThisTask = id => {
         deleteTask(id);
     }
 
+    // Funcion para eliminar un TODO
     const changeThisState = task => {
         if (!task.completed)
             task.completed = true;

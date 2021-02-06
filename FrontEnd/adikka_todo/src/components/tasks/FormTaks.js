@@ -1,11 +1,20 @@
 import React, { Fragment, useContext, useState } from 'react';
+import Swal from 'sweetalert2';
 
+// Importación del context de estados
 import TaskContext from '../../context/tasks/taskContext';
 
-const FormTaks = (props) => {
+/* 
+ Componente FormTaks principal
+*/
+const FormTaks = () => {
+    // Creación del objecto context para su implementación
     const taskContext = useContext(TaskContext);
-    const {  createTask } = taskContext;
 
+    // Implementación de props provenientes del context
+    const { createTask } = taskContext;
+
+    // Implementación del state del componente para la manipulacion de la información
     const [task, saveTask] = useState({
         id: 0,
         title: '',
@@ -13,9 +22,10 @@ const FormTaks = (props) => {
         completed: false
     });
 
+    // Destructuring del objeto state del componente para su facilidad de manipulacion
     const { title, name } = task;
 
-
+    // Funcion para la manipulacion de los inputs
     const onChangeTasks = e => {
         saveTask({
             ...task,
@@ -23,11 +33,16 @@ const FormTaks = (props) => {
         });
     }
 
+    // Funcion para enviar la informacion al props de creación en el state (en base de datos)
     const onSubmitTask = e => {
         e.preventDefault();
 
         if (title === '' || name === '') {
-            // Mensaje de alerta
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algún campo se encuentra vacio'
+            });
             return;
         }
 
