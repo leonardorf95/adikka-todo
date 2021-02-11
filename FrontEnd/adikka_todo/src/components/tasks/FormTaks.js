@@ -8,6 +8,25 @@ import TaskContext from '../../context/tasks/taskContext';
  Componente FormTaks principal
 */
 const FormTaks = () => {
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
     // Creación del objecto context para su implementación
     const taskContext = useContext(TaskContext);
 
@@ -59,11 +78,12 @@ const FormTaks = () => {
 
     return (
         <Fragment>
-            <form className='needs-validation' noValidate
+            <form className='row g-3 needs-validation' noValidate
                 onSubmit={onSubmitTask}
             >
-                <div className="mb-3">
+                <div className="col-md-12">
                     <label htmlFor="title" className="form-label">Title (Required)</label>
+
                     <input
                         type="text"
                         className="form-control"
@@ -73,13 +93,15 @@ const FormTaks = () => {
                         value={title}
                         onChange={onChangeTasks}
                         required />
+
                     <div className="invalid-feedback">
                         Please provide a Title
                     </div>
                 </div>
 
-                <div className="mb-3">
+                <div className="col-md-12">
                     <label htmlFor="name" className="form-label">Name</label>
+
                     <textarea
                         className="form-control"
                         id="name"
@@ -88,16 +110,16 @@ const FormTaks = () => {
                         value={name}
                         onChange={onChangeTasks}
                         required>
-
                     </textarea>
+
                     <div className="invalid-feedback">
                         Please provide a name
                     </div>
                 </div>
 
-                <div className="col-12">
+                <div className="modal-footer">
                     <button className="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
-                        &nbsp; &nbsp;
+                            &nbsp; &nbsp;
                     <input
                         className="btn btn-primary"
                         type="submit"
