@@ -11,6 +11,25 @@ import Header from '../layout/Header';
  Componente FormEditTask principal
 */
 const FormEditTask = (props) => {
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
     // Obtención del id proveniente de la url
     const { id } = props.match.params;
 
@@ -18,7 +37,7 @@ const FormEditTask = (props) => {
     const taskContext = useContext(TaskContext);
 
     // Implementación de props provenientes del context
-    const { getTask, updateTask } = taskContext;
+    const { getTask, updateTask, deleteTask } = taskContext;
 
     // Implementación del state del componente para la manipulacion de la información
     const [taskUpdate, saveTask] = useState(null);
@@ -32,7 +51,7 @@ const FormEditTask = (props) => {
     // Funcion para obtener la información basada en un solo item
     const getInformation = async () => {
         const information = await getTask(id);
-        console.log(information[0])
+
         saveTask(information[0]);
     }
 
@@ -44,6 +63,13 @@ const FormEditTask = (props) => {
             ...taskUpdate,
             [e.target.name]: e.target.value
         });
+    }
+
+    // Funcion para eliminar un item
+    const deleteThisTask = id => {
+        deleteTask(id);
+
+        window.location.href = '/';
     }
 
     // Funcion para enviar la informacion al props de actualizacion en el state (en base de datos)
@@ -74,6 +100,7 @@ const FormEditTask = (props) => {
                 >
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">Title (Required)</label>
+
                         <input
                             type="text"
                             className="form-control"
@@ -83,13 +110,15 @@ const FormEditTask = (props) => {
                             value={taskUpdate === null ? '' : taskUpdate.title}
                             onChange={onChangeTasks}
                             required />
+
                         <div className="invalid-feedback">
                             Please provide a Title
-                    </div>
+                        </div>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
+
                         <textarea
                             className="form-control"
                             id="name"
@@ -98,21 +127,25 @@ const FormEditTask = (props) => {
                             value={taskUpdate === null ? '' : taskUpdate.name}
                             onChange={onChangeTasks}
                             required>
-
                         </textarea>
+
                         <div className="invalid-feedback">
                             Please provide a name
-                    </div>
+                        </div>
                     </div>
 
-                    <div className="col-12">
-                        <button className="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
-                        &nbsp; &nbsp;
-                    <input
-                            className="btn btn-primary"
-                            type="submit"
-                            value='Save'
-                        />
+                    <div className="col-md-12">
+                        <button className='btn btn-secondary btn-small'
+                            onClick={() => deleteThisTask(id)}
+                        >
+                            <i className="far fa-trash-alt"></i>  &nbsp; 
+                            Delete
+                        </button>
+                            &nbsp; &nbsp;
+                        <button type='submit' className="btn btn-primary">
+                            <i className="far fa-edit"></i>  &nbsp;
+                                Edit
+                            </button>
                     </div>
                 </form>
             </main>
