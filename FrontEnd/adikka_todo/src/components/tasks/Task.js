@@ -12,12 +12,7 @@ const Task = ({ task }) => {
     const taskContext = useContext(TaskContext);
 
     // Implementación de props provenientes del context
-    const { changeStateTask, deleteTask } = taskContext;
-
-    // Funcion para eliminar un item
-    const deleteThisTask = id => {
-        deleteTask(id);
-    }
+    const { changeStateTask } = taskContext;
 
     // Funcion para eliminar un TODO
     const changeThisState = task => {
@@ -32,10 +27,6 @@ const Task = ({ task }) => {
     return (
         <Fragment>
             <tr>
-                <th scope="row">{task === undefined ? 0 : task.id}</th>
-                <td>{task === undefined ? 'Title' : task.title}</td>
-                <td>{task === undefined ? '2021-02-01' : task.createdAt}</td>
-                <td>{task === undefined ? 'name' : task.name}</td>
                 <td>
                     {task === undefined ? null :
                         task.completed
@@ -43,16 +34,15 @@ const Task = ({ task }) => {
                             : (<button className='btn btn-light' value={task.completed} onClick={() => changeThisState(task)}><i className="far fa-check-circle"></i></button>)
                     }
                 </td>
+
+                <td>{task === undefined ? 'Title' : task.title}</td>
+                <td>{task === undefined ? '2021-02-01' : task.createdAt}</td>
+                <td>{task === undefined ? 'name' : task.name}</td>
+                
                 <td>
-                    <Link to={`/detail/${task.id}`} className="btn btn-warning btn-small">
-                        <i className="far fa-edit"></i>
+                    <Link to={`/detail/${task.id}`} className="btn btn-link">
+                        Detail
                     </Link>
-                            &nbsp; &nbsp;
-                    <button className='btn btn-danger btn-small'
-                        onClick={() => deleteThisTask(task.id)}
-                    >
-                        <i className="far fa-trash-alt"></i>
-                    </button>
                 </td>
             </tr>
         </Fragment>
