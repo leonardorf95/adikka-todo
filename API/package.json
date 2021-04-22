@@ -4,7 +4,7 @@
   "description": "TODO app for test Adikka",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js --exec babel-node",
+    "dev": "nodemon src/index.js",
     "start": "node dist/index.js",
     "build": "babel src --out-dir dist",
     "test": "jest src/test.js"
